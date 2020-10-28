@@ -20,11 +20,28 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SectionHeaderView.identifier, withReuseIdentifier: SectionHeaderView.identifier)
         collectionView.collectionViewLayout = createLayout()
 
 
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kind, for: indexPath) as! SectionHeaderView
+        headerView.setupHeader()
+        switch (indexPath.section) {
+        case (0):
+            headerView.label.text = "Highlights"
+        case (2):
+            headerView.label.text = "Sectors"
+        case (3):
+            headerView.label.text = "Suggestions"
+        default:
+            headerView.label.text = ""
+        }
+        return headerView
+    }
+
 
     func createLayout() -> UICollectionViewLayout{
         let layout = UICollectionViewCompositionalLayout{(sectionIndex, enviroment) -> NSCollectionLayoutSection?  in
@@ -33,11 +50,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 //Header
                 let size  = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
                 let item = NSCollectionLayoutItem(layoutSize: size)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 8, bottom: 10, trailing: 8)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 8, bottom: 6, trailing: 8)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .absolute(200))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(30))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: SectionHeaderView.identifier, alignment: .topLeading)
+                section.boundarySupplementaryItems = [sectionHeader]
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 
                 return section
@@ -55,12 +75,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 //Sectors
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(155))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 4, bottom: 10, trailing: 4)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 4, bottom: 6, trailing: 4)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(155))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(30))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: SectionHeaderView.identifier, alignment: .topLeading)
+                section.boundarySupplementaryItems = [sectionHeader]
+                section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
                 return section
             default:
                //Chip
@@ -72,7 +95,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(170), heightDimension: .absolute(65))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
                 let section = NSCollectionLayoutSection(group: group)
-                // section.boundarySupplementaryItems = [sectionHeader]
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(30))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: SectionHeaderView.identifier, alignment: .topLeading)
+                section.boundarySupplementaryItems = [sectionHeader]
                 section.orthogonalScrollingBehavior = .continuous
                 section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 10, bottom: 20, trailing: 4)
 
@@ -119,7 +144,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         switch indexPath.section {
         case 0:
             let cell = cell as? HeaderCell
-            cell?.backgroundColor = .systemIndigo
+            cell?.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.4)
             let attributedTitle = NSMutableAttributedString(string: "\(titles[indexPath.row])\n\n", attributes: [
                        .foregroundColor: UIColor.white,
                        .font: UIFont.systemFont(ofSize: 12, weight: .bold)
@@ -143,12 +168,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 2:
             let cell = cell as? HeaderCell
             cell?.iconView.image = UIImage(systemName: "\(icon[indexPath.row])")
-            cell?.backgroundColor = colors[indexPath.row]
+            cell?.iconView.tintColor =  colors[indexPath.row]
+            cell?.backgroundColor = colors[indexPath.row].withAlphaComponent(0.4)
+          //  cell?.titleView.textColor = colors[indexPath.row]
             let attributedTitle = NSMutableAttributedString(string: "\n\(sectors[indexPath.row])\n", attributes: [
-                       .foregroundColor: UIColor.white,
+                       .foregroundColor: colors[indexPath.row],
                        .font: UIFont.systemFont(ofSize: 10, weight: .semibold)
                    ])
-            attributedTitle.append(NSAttributedString(string: "20 items\n", attributes: [ .foregroundColor: UIColor.white,
+            attributedTitle.append(NSAttributedString(string: "20 items\n", attributes: [ .foregroundColor: colors[indexPath.row],
                            .font: UIFont.systemFont(ofSize: 8, weight: .regular)]))
             cell?.titleView.attributedText = attributedTitle
 

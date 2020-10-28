@@ -9,6 +9,5 @@ import UIKit
 
 class DetailHeaderCell: UICollectionViewCell {
     @IBOutlet weak var titleView: UILabel!
-    @IBOutlet weak var subtitleView: UILabel!
     
 }

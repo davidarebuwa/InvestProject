@@ -19,8 +19,12 @@ import Macaw
     private let emptyBarColor = Color.rgba(r: 138, g: 147, b: 219, a: 0.5)
     private let gradientColor = LinearGradient(degree: 90, from: Color(val: 0xfc0c7e), to: Color(val: 0xffd85e))
     
+    private var isDark = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+      
     }
     
      required init?(coder aDecoder: NSCoder) {
@@ -34,14 +38,6 @@ import Macaw
         
         let barsWidth = Double((barWidth * barsCount) + (barsSpacing * (barsCount - 1)))
         let barsCenterX = viewCenterX - barsWidth / 2
-        
-        let text = Text(
-            text: "Return on investment",
-            font: Font(name: ".SFUIText-Bold", size: 24),
-            fill: Color(val: 0xFFFFFF)
-        )
-        text.align = .mid
-        text.place = .move(dx: viewCenterX, dy: 30)
         
         backgroundGroup = Group()
         for barIndex in 0...barsCount - 1 {
@@ -90,8 +86,8 @@ import Macaw
         for barIndex in 0...barsCount - 1 {
             let text = Text(
                 text: barsCaptions[barIndex],
-                font: Font(name: ".SFUIText-Medium", size: 12),
-                fill: Color(val: 0xFFFFFF)
+                font: Font(name: "SFUIText-Bold", size: 14),
+                fill: Color(val: self.traitCollection.userInterfaceStyle == .dark ?  0xFFFFFF : 0x808080)
             )
             text.align = .mid
             text.place = .move(
@@ -101,8 +97,8 @@ import Macaw
             captionsGroup.contents.append(text)
         }
         
-        self.node = [text, backgroundGroup, mainGroup, captionsGroup].group()
-        self.backgroundColor = UIColor(cgColor: Color(val: 0x5B2FA1).toCG())
+        self.node = [backgroundGroup, mainGroup, captionsGroup].group()
+        self.backgroundColor = UIColor.clear
     }
     
     private func createAnimations() {

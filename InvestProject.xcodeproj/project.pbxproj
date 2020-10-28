@@ -22,6 +22,7 @@
 		56D594242541A21700CCBFAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56D594222541A21700CCBFAA /* Main.storyboard */; };
 		56D594262541A21B00CCBFAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56D594252541A21B00CCBFAA /* Assets.xcassets */; };
 		56D594292541A21B00CCBFAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56D594272541A21B00CCBFAA /* LaunchScreen.storyboard */; };
+		DC8900A22549F9FF00EAB14F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8900A12549F9FF00EAB14F /* SectionHeaderView.swift */; };
 		F528BA563E53E2DA2AD55193 /* Pods_InvestProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931F4EF80A9B964C0CAB44F6 /* Pods_InvestProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		56D594282541A21B00CCBFAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56D5942A2541A21B00CCBFAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		931F4EF80A9B964C0CAB44F6 /* Pods_InvestProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvestProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC8900A12549F9FF00EAB14F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				5686690C25489F08004F04F6 /* itemsCell.swift */,
 				5686690F25489FA6004F04F6 /* InfoCell.swift */,
 				568669122548A04A004F04F6 /* ChartCell.swift */,
+				DC8900A12549F9FF00EAB14F /* SectionHeaderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			files = (
 				568669132548A04A004F04F6 /* ChartCell.swift in Sources */,
 				56D594212541A21700CCBFAA /* ViewController.swift in Sources */,
+				DC8900A22549F9FF00EAB14F /* SectionHeaderView.swift in Sources */,
 				56745EB12542018A0078CC55 /* PieView.swift in Sources */,
 				56745EA92541FF350078CC55 /* HeaderCell.swift in Sources */,
 				56745EB7254211C30078CC55 /* ChipCell.swift in Sources */,
